@@ -1,58 +1,57 @@
+import java.util.*;
+
 class Solution {
+
     public int findPages(int[] arr, int k) {
-        // code here
-      int n = arr.length;
-      if(k>n){
-          return -1;
-      }
-      int low =0;
-      int high = 0;
-      int ans = -1;
-      for(int i=0;i<arr.length;i++){
-          low = Math.max(low, arr[i]);
-          high = high + arr[i];
-      }
-      
-      while(low<=high){
-          int mid = low + (high-low)/2;
-          if(findMaxPage(arr,k,mid)){
-              ans = mid;
-              high = mid - 1;
-          }else{
-              low=mid+1;
-          }
-      }
-      
-      return ans;
-      
-      
-      
-      
-      
-      
-      
-        
-        
-        
-    }
-    
-    static boolean findMaxPage(int[] arr, int k, int maxPage){
-        int student =1;
-        int pages =0;
-        for(int i=0;i<arr.length;i++){
-            if(pages+arr[i]<=maxPage){
-                pages+=arr[i];
-            }else{
-                student++;
-                pages = arr[i];
+
+        int n = arr.length;
+        if(k > n) return -1;
+
+        int low = 0;
+        int high = 0;
+
+        for(int i = 0; i < arr.length; i++){
+            low = Math.max(low, arr[i]);
+            high += arr[i];
+        }
+
+        int ans = -1;
+
+        while(low <= high){
+
+            int mid = low + (high - low) / 2;
+
+            if(canAllocate(arr, k, mid)){
+                ans = mid;
+                high = mid - 1;
             }
-            if(student>k){
-            return false;
+            else{
+                low = mid + 1;
+            }
         }
+
+        return ans;
+    }
+
+    static boolean canAllocate(int[] arr, int k, int pages){
+
+        int currentSum = 0;
+        int count = 1;
+
+        for(int i = 0; i < arr.length; i++){
+
+            if(currentSum + arr[i] <= pages){
+                currentSum += arr[i];
+            }
+            else{
+                count++;
+                currentSum = arr[i];
+            }
+
+            if(count > k)
+                return false;
         }
-        
-        
+
         return true;
-        
     }
 }
