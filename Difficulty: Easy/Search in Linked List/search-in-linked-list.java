@@ -9,15 +9,16 @@
 class Solution {
     public boolean searchKey(Node head, int key) {
         // Code here
+        
+        if(head.data==key){
+            return true;
+        }
         Node temp = head;
-        while(temp.next!=null){
+        while(temp!=null){
             if(temp.data==key){
                 return true;
             }
             temp=temp.next;
-        }
-        if(temp.data==key){
-            return true;
         }
         return false;
     }
